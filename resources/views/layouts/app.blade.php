@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" sizes="192x192" href="images/icon.png">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -15,6 +16,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Norican&display=swap" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .post {
+            position: relative;
+            flex: 1 0 220px;
+            color: #fff;
+            cursor: pointer;
+            width: 293px;
+            height: 293px;
+        }
+
+        .post:hover .post-info,
+        .post:focus .post-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .post-info {
+            display: none;
+        }
+
+        .rtl {
+            direction: rtl;
+        }
+
+        .ltr {
+            direction: ltr;
+        }
+    </style>
 
     <!-- Styles -->
     <link rel="stylesheet" href={{ asset('css/all.css') }}>
@@ -30,15 +66,11 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+            {{ $header }}
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="mt-10 mb-2">
             {{ $slot }}
         </main>
     </div>

@@ -8,6 +8,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" sizes="192x192" href="images/icon.png">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="preconnect" href="https://fonts.googleapis.com">
