@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group( function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        return redirect()->route('user_profile' , ['username' => auth()->user()->username]);
+        return redirect()->route('user_profile', ['username' => auth()->user()->username]);
     })->name('dashboard');
 });
 
@@ -32,3 +33,5 @@ Route::get('{username}', function ($username) {
         return view('profile', ['profile' => $user]);
     }
 })->name('user_profile'); // name of the route
+
+Route::resource('/post', PostController::class);
