@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        abort(404); // the user should see his posts only not all the posts
     }
 
     /**
@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -35,7 +35,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'post_caption' => 'string',
+            'image_path' => 'required|image'
+        ]);
+
+        // same as below
+        // $data['user_id'] = auth()->id();
+        // $image_path = request('image_path')->store('uploads', 'public'); // save image to a folder called user using public storage
+        // $data['image_path'] = $image_path;
+        // Post::create($data);
+
+        $image_path = request('image_path')->store('uploads', 'public'); // save image to a folder called user using public storage
+
+        auth()->user()->posts()->create([
+            'post_caption' => $data['post_caption'],
+            'image_path' => $image_path
+        ]);
+
+        return redirect()->route('user_profile', ['username' => auth()->user()->username]);
     }
 
     /**

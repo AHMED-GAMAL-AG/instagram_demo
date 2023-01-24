@@ -17,7 +17,7 @@
                         <a href="{{ route('profile.show') }}"
                             class="border border-solid border-gray-300 rounded-md py-0 px-5 mr-16 whitespace-nowrap ">
                             {{ __('Edit Profile') }}</a>
-                        <a href="#">
+                        <a href="posts/create">
                             <x-jet-button class="ms-8 leading-none whitespace-nowrap">
                                 {{ __('Add Post') }}
                             </x-jet-button>
@@ -27,7 +27,7 @@
                     {{-- followers/following ,bio,link --}}
                     <div>
                         <ul class="flex flex-row mb-5">
-                            <li class="mr-10 cursor-pointer"> <span class="font-semibold">15</span>
+                            <li class="mr-10 cursor-pointer"> <span class="font-semibold">{{$posts->count()}}</span>
                                 {{ __('posts') }}
                             </li>
                             <li class="mr-10"><a href="#"><span class="font-semibold">25 </span> </a>
@@ -50,12 +50,12 @@
     {{-- the post --}}
     <div class="max-w-4xl my-0 mx-auto">
         <hr class="mb-10">
-
         <div class="grid grid-cols-3 gap-4 mx-0 mt-0 mb-6">
-            @for ($i = 0; $i < 10; $i++)
+
+            @foreach ($posts as $post)
                 <div class="post">
                     <a href="#" class="w-full h-full">
-                        <img src="{{ asset('images/logo1.png') }}" class="w-full h-full object-cover">
+                        <img src="storage/{{$post->image_path}}" class="w-full h-full object-cover">
                         <div class="post-info">
                             <ul>
                                 <li class="inline-block font-semibold me-7">
@@ -72,6 +72,6 @@
                         </div>
                     </a>
                 </div>
-            @endfor
+            @endforeach
         </div>
 </x-app-layout>

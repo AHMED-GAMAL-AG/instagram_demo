@@ -62,8 +62,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function post()
+    public function posts()
     {
-        $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->orderBy('created_at','DESC');
     }
 }

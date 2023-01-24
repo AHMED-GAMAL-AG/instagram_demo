@@ -27,11 +27,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 Route::get('{username}', function ($username) {
     $user = User::where('username', $username)->first(); // search the user table with the 'username' field that matches the value of the $username The first() method is used to retrieve only the first result of the query
+    $posts = $user->posts;
+
     if ($user == null) {
         abort(404);
     } else {
-        return view('profile', ['profile' => $user]);
+        return view('profile', [
+            'profile' => $user,
+            'posts' => $posts
+        ]);
     }
 })->name('user_profile'); // name of the route
 
-Route::resource('/post', PostController::class);
+Route::resource('/posts', PostController::class);
