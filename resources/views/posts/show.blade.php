@@ -22,10 +22,20 @@
                                 href="/{{ $post->user->username }}">{{ $post->user->username }}</a>
                         </div>
 
-                        {{-- if current user show edit else follow --}}
+                        {{-- if current user show edit and delete else follow --}}
                         @if (auth()->id() == $post->user_id)
                             <div class="text-gray-500">
                                 <a href="/posts/{{ $post->id }}/edit"> <i class="fas fa-edit"></i> </a>
+                                <span class="font-bold mx-2">|</span>
+
+                                <form class="inline-block" action="/posts/{{ $post->id }} " method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="text-xs ms-2" type="submit"
+                                        onclick="return confirm('Are you sure you want to delete this Post? this will delete your comment permanently.')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         @else
                             <div>

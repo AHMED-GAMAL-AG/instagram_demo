@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -106,8 +107,8 @@ class PostController extends Controller
             'image_path' => 'image|nullable'
         ]);
 
-        // if the request has image_path then update it else use old image_path
-        request()->has('image_path') ? $image_path = request('image_path')->store('uploads', 'public') : $image_path = $post->image_path;
+        // if the request has image_path then update it else use old image_path if both not found the 404
+        request()->has('image_path') ? $image_path = request('image_path')->store('uploads', 'public') : $image_path = $post->image_path ?? abort(404);
         $data['image_path'] = $image_path;
 
         $post->update($data);
@@ -123,6 +124,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        abort_if($post == null, $post->delete());
+
+        Storage::delete("public/" . $post->image_path); // delete the post image
+
+        return redirect($post->user->username);
     }
 }
