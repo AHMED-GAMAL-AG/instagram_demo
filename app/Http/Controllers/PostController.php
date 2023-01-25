@@ -48,7 +48,7 @@ class PostController extends Controller
 
         $image_path = request('image_path')->store('uploads', 'public'); // save image to a folder called user using public storage
 
-        auth()->user()->posts()->create([
+        auth()->user()->posts()->create([ // ignore error
             'post_caption' => $data['post_caption'],
             'image_path' => $image_path
         ]);
@@ -64,7 +64,14 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        // if post is not found
+        if ($post == null) {
+            abort(404);
+        }
+
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
     /**

@@ -27,7 +27,7 @@
                     {{-- followers/following ,bio,link --}}
                     <div>
                         <ul class="flex flex-row mb-5">
-                            <li class="mr-10 cursor-pointer"> <span class="font-semibold">{{$posts->count()}}</span>
+                            <li class="mr-10 cursor-pointer"> <span class="font-semibold">{{ $posts->count() }}</span>
                                 {{ __('posts') }}
                             </li>
                             <li class="mr-10"><a href="#"><span class="font-semibold">25 </span> </a>
@@ -54,8 +54,8 @@
 
             @foreach ($posts as $post)
                 <div class="post">
-                    <a href="#" class="w-full h-full">
-                        <img src="storage/{{$post->image_path}}" class="w-full h-full object-cover">
+                    <a href="posts/{{ $post->id }}" class="w-full h-full">
+                        <img src="/storage/{{ $post->image_path }}" class="w-full h-full object-cover">
                         <div class="post-info">
                             <ul>
                                 <li class="inline-block font-semibold me-7">
