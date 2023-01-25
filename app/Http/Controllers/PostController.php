@@ -82,7 +82,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        // if post is not found
+        if ($post == null) {
+            abort(404);
+        }
+
+        return view('posts.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -94,7 +101,18 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = request()->validate([
+            'post_caption' => 'string',
+            'image_path' => 'image|nullable'
+        ]);
+
+        // if the request has image_path then update it else use old image_path
+        request()->has('image_path') ? $image_path = request('image_path')->store('uploads', 'public') : $image_path = $post->image_path;
+        $data['image_path'] = $image_path;
+
+        $post->update($data);
+
+        return redirect($post->user->username);
     }
 
     /**

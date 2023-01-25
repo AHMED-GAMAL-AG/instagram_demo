@@ -21,9 +21,17 @@
                             <a class="font-bold hover:underline"
                                 href="/{{ $post->user->username }}">{{ $post->user->username }}</a>
                         </div>
-                        <div>
-                            <button class="bg-blue-500 rounded-lg shadow px-2 py-1 text-white">follow</button>
-                        </div>
+
+                        {{-- if current user show edit else follow --}}
+                        @if (auth()->id() == $post->user_id)
+                            <div class="text-gray-500">
+                                <a href="/posts/{{ $post->id }}/edit"> <i class="fas fa-edit"></i> </a>
+                            </div>
+                        @else
+                            <div>
+                                <button class="bg-blue-500 rounded-lg shadow px-2 py-1 text-white">follow</button>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="border-b border-solid border-gray-300 h-full">
@@ -57,9 +65,11 @@
 
                     <div class="p-4">
                         <div class="flex flex-row items-center justify-between">
-                            <input class="w-full outline-none border-none p-1" type="text" id="comment" placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
+                            <input class="w-full outline-none border-none p-1" type="text" id="comment"
+                                placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
                             <input type="hidden" name="post_id" value="{{ $post->id }}">
-                            <button class="text-blue-500 font-semibold hover:text-blue-700" type="submit">{{ __('Post') }}</button>
+                            <button class="text-blue-500 font-semibold hover:text-blue-700"
+                                type="submit">{{ __('Post') }}</button>
                         </div>
                     </div>
 
