@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,5 @@ Route::get('{username}', function ($username) {
 })->name('user_profile'); // name of the route
 
 Route::resource('/posts', PostController::class);
+
+Route::resource('/comments', CommentController::class);
