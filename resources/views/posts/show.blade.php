@@ -14,7 +14,8 @@
                 </div>
                 {{-- the user information post content --}}
                 <div class="col-span-2 bg-white flex flex-col">
-                    <div class="flex flex-row p-3 border-b border-solid border-gray-300 items-center justify-between">
+                    <div class="flex flex-row p-3 border-b border-solid border-gray-300 items-center justify-between"
+                        id="sec1">
                         <div class="flex flex-row items-center">
                             <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->username }}"
                                 class="rounded-full h-10 w-10 mr-3">
@@ -44,7 +45,7 @@
                         @endif
                     </div>
 
-                    <div class="border-b border-solid border-gray-300 h-full">
+                    <div class="border-b border-solid border-gray-300 h-full" >
                         <div class="grid grid-cols-5 overflow-y-auto" id="commentArea">
                             <div class="col-span-1 m-3">
                                 <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->username }}"
@@ -55,10 +56,24 @@
                                     href="/{{ $post->user->username }}">{{ $post->user->username }} </a>
                                 <span>{{ $post->post_caption }}</span>
                             </div>
+                            @foreach ($post->comments as $comment)
+                                <div class="col-span-1 m-3">
+                                    <img src="{{ $comment->user->profile_photo_url }}"
+                                        alt="{{ $comment->user->username }}" srcset=""
+                                        class="rounded-full h-10 w-10 ">
+                                </div>
+                                <div class="col-span-4 mt-5 me-7">
+                                    <a class="font-bold hover:underline"
+                                        href="/{{ $comment->user->username }}">{{ $comment->user->username }} </a>
+                                    <span>{{ $comment->comment }}</span>
+                                    <div class="text-gray-500 text-xs">{{ $comment->created_at->format('M j o') }}
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col" id="sec3">
                         <div class="flex-col items-start pl-4 pb-1">
                             <div class="flex flex-row items-center">
                                 <button class="text-2xl mr-3 focus:outline-none"><i class="far fa-heart"></i></button>
@@ -73,20 +88,21 @@
                         </div>
                     </div>
 
-                    <div class="p-4">
-                        <div class="flex flex-row items-center justify-between">
-                            <input class="w-full outline-none border-none p-1" type="text" id="comment"
-                                placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
-                            <input type="hidden" name="post_id" value="{{ $post->id }}">
-                            <button class="text-blue-500 font-semibold hover:text-blue-700"
-                                type="submit">{{ __('Post') }}</button>
-                        </div>
+                    <div class="p-4" id="sec4">
+                        <form action="/comments" method="post" autocomplete="off">
+                            @csrf
+                            <div class="flex flex-row items-center justify-between">
+                                <input class="w-full outline-none border-none p-1" type="text" id="comment"
+                                    placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
+                                {{-- pass the post_id as a hidden input to the stor() in the comments controller --}}
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <button class="text-blue-500 font-semibold hover:text-blue-700"
+                                    type="submit">{{ __('Post') }}</button>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 

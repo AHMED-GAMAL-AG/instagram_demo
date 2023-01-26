@@ -66,7 +66,7 @@
                                 <li class="inline-block font-semibold">
                                     <span class="absolute h-1 w-1 overflow-hidden">{{ __('Comments:') }}</span>
                                     <i class="fas fa-comment" aria-hidden="true"></i>
-                                    25
+                                    {{ $post->comments()->count() }}
                                 </li>
                             </ul>
                         </div>

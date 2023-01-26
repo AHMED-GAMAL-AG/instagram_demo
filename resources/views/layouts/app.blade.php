@@ -56,6 +56,7 @@
     <link rel="stylesheet" href={{ asset('css/all.css') }}>
 
     @livewireStyles
+
 </head>
 
 <body class="font-sans antialiased">
@@ -78,6 +79,27 @@
     @stack('modals')
 
     @livewireScripts
+
+    <script>
+        var img = document.getElementById('postImage');
+        var sec1 = document.getElementById('sec1');
+        var sec3 = document.getElementById('sec3');
+        var sec4 = document.getElementById('sec4');
+        if (img != null) {
+            var imgheight = img.offsetHeight;
+            var sec1Height = sec1.offsetHeight;
+            var sec3Height = sec3.offsetHeight;
+            var sec4Height = sec4.offsetHeight;
+            var height = imgheight - (sec1Height + sec3Height + sec4Height);
+            document.getElementById("commentArea").style.maxHeight = height.toString() + "px";
+        }
+
+        function copyToClipboard(id) {
+            var postlink = document.getElementById(id);
+            navigator.clipboard.writeText(postlink.value);
+            alert("The shareable link: " + postlink.value);
+        }
+    </script>
 </body>
 
 </html>

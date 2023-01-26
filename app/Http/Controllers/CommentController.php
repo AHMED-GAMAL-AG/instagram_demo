@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,7 +15,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        abort(404); // dont want to show all the comments but a comment in a specified post
     }
 
     /**
@@ -24,7 +25,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        abort(404); // dont want to show new form to create the comments but a form in a specified post
     }
 
     /**
@@ -35,7 +36,16 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $data = request()->validate([
+            'post_id' => 'required|integer', // the post id is passed as a hidden input in the form in show.blade.php
+            'comment' => 'required|string|max:255'
+        ]);
+
+        $data['user_id'] = auth()->id();
+        Comment::create($data);
+
+        return back();
     }
 
     /**
@@ -46,7 +56,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        abort(404); // dont want to show a comment in a new view but a comment in a specified post
     }
 
     /**
