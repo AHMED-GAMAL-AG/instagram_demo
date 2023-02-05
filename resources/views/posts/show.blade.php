@@ -45,7 +45,7 @@
                         @endif
                     </div>
 
-                    <div class="border-b border-solid border-gray-300 h-full" >
+                    <div class="border-b border-solid border-gray-300 h-full">
                         <div class="grid grid-cols-5 overflow-y-auto" id="commentArea">
                             <div class="col-span-1 m-3">
                                 <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->username }}"
@@ -67,6 +67,10 @@
                                         href="/{{ $comment->user->username }}">{{ $comment->user->username }} </a>
                                     <span>{{ $comment->comment }}</span>
                                     <div class="text-gray-500 text-xs">{{ $comment->created_at->format('M j o') }}
+                                        @if (auth()->id() == $comment->user_id)
+                                            <a href="/comments/{{ $comment->id }}/edit" class="text-xs ms-2"><i
+                                                    class="fa fa-edit"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach

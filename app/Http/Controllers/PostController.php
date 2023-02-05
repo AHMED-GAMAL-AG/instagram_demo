@@ -124,10 +124,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        abort_if($post == null, $post->delete());
+        if ($post == null) {
+            abort(404);
+        } else {
+            $post->delete();
+            Storage::delete("public/" . $post->image_path); // delete the post image
 
-        Storage::delete("public/" . $post->image_path); // delete the post image
-
-        return redirect($post->user->username);
+            return redirect($post->user->username);
+        }
     }
 }
