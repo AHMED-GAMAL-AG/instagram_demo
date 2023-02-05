@@ -88,6 +88,8 @@ class PostController extends Controller
             abort(404);
         }
 
+        $this->authorize('update', $post); // the policy a have created pass to it the post and check if the user is authorized
+
         return view('posts.edit', [
             'post' => $post
         ]);
@@ -102,6 +104,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        abort_if($post == null, 404);
+
+        $this->authorize('update', $post); // the policy a have created pass to it the post and check if the user is authorized
+
         $data = request()->validate([
             'post_caption' => 'string',
             'image_path' => 'image|nullable'
@@ -124,13 +130,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if ($post == null) {
-            abort(404);
-        } else {
-            $post->delete();
-            Storage::delete("public/" . $post->image_path); // delete the post image
+        abort_if($post == null, 404);
 
-            return redirect($post->user->username);
-        }
+        $this->authorize('delete', $post); // the policy a have created pass to it the post and check if the user is authorized
+        $post->delete();
+        Storage::delete("public/" . $post->image_path); // delete the post image
+
+        return redirect($post->user->username);
     }
 }

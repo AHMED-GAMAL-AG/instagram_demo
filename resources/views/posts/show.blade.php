@@ -24,7 +24,9 @@
                         </div>
 
                         {{-- if current user show edit and delete else follow --}}
-                        @if (auth()->id() == $post->user_id)
+                        {{-- @if (auth()->id() == $post->user_id) --}}
+                        {{-- the update method on the post-policy --}}
+                        @can('update', $post)
                             <div class="text-gray-500">
                                 <a href="/posts/{{ $post->id }}/edit"> <i class="fas fa-edit"></i> </a>
                                 <span class="font-bold mx-2">|</span>
@@ -38,11 +40,13 @@
                                     </button>
                                 </form>
                             </div>
-                        @else
+                        @endcan
+
+                        @cannot('update', $post)
                             <div>
                                 <button class="bg-blue-500 rounded-lg shadow px-2 py-1 text-white">follow</button>
                             </div>
-                        @endif
+                        @endcannot
                     </div>
 
                     <div class="border-b border-solid border-gray-300 h-full">
