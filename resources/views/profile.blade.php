@@ -14,14 +14,20 @@
                     {{-- name, edit/add post --}}
                     <div class="flex flex-row items-center">
                         <h1 class="font-light text-3xl mr-14">{{ $profile->username }}</h1>
-                        <a href="{{ route('profile.show') }}"
-                            class="border border-solid border-gray-300 rounded-md py-0 px-5 mr-16 whitespace-nowrap ">
-                            {{ __('Edit Profile') }}</a>
-                        <a href="posts/create">
-                            <x-jet-button class="ms-8 leading-none whitespace-nowrap">
-                                {{ __('Add Post') }}
-                            </x-jet-button>
-                        </a>
+                        @if (Auth::user() != null && Auth::user()->id == $profile->id)
+                            <a href="{{ route('profile.show') }}"
+                                class="border border-solid border-gray-300 rounded-md py-0 px-5 mr-16 whitespace-nowrap ">
+                                {{ __('Edit Profile') }}</a>
+                            <a href="posts/create">
+                                <x-jet-button class="ms-8 leading-none whitespace-nowrap">
+                                    {{ __('Add Post') }}
+                                </x-jet-button>
+                            </a>
+                        @else
+                            <button class="bg-blue-500 rounded-lg shadow px-2 py-2 text-white">
+                                follow
+                            </button>
+                        @endif
                     </div>
 
                     {{-- followers/following ,bio,link --}}
