@@ -71,7 +71,10 @@
                                         href="/{{ $comment->user->username }}">{{ $comment->user->username }} </a>
                                     <span>{{ $comment->comment }}</span>
                                     <div class="text-gray-500 text-xs">{{ $comment->created_at->format('M j o') }}
-                                        @if (auth()->id() == $comment->user_id)
+
+                                        {{-- @if (auth()->id() == $comment->user_id) --}}
+
+                                        @can('delete', $comment)
                                             {{-- route takes the action and the id --}}
                                             <form class="inline-block"
                                                 action="{{ route('comments.destroy', $comment->id) }}" method="post">
@@ -82,9 +85,11 @@
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
+                                        @endcan
+                                        @can('update', $comment)
                                             <a href="/comments/{{ $comment->id }}/edit" class="text-xs ms-2"><i
                                                     class="fa fa-edit"></i></a>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </div>
                             @endforeach
@@ -107,17 +112,22 @@
                     </div>
 
                     <div class="p-4" id="sec4">
-                        <form action="/comments" method="post" autocomplete="off">
-                            @csrf
-                            <div class="flex flex-row items-center justify-between">
-                                <input class="w-full outline-none border-none p-1" type="text" id="comment"
-                                    placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
-                                {{-- pass the post_id as a hidden input to the stor() in the comments controller --}}
-                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                <button class="text-blue-500 font-semibold hover:text-blue-700"
-                                    type="submit">{{ __('Post') }}</button>
-                            </div>
-                        </form>
+                        @if (Auth::check())
+                            <form action="/comments" method="post" autocomplete="off">
+                                @csrf
+                                <div class="flex flex-row items-center justify-between">
+                                    <input class="w-full outline-none border-none p-1" type="text" id="comment"
+                                        placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
+                                    {{-- pass the post_id as a hidden input to the stor() in the comments controller --}}
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <button class="text-blue-500 font-semibold hover:text-blue-700"
+                                        type="submit">{{ __('Post') }}</button>
+                                </div>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="text-blue-500 text-sm">{{ __('Log In') }}</a>
+                            <span class="text-sm">{{ __(' to like or comment') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>

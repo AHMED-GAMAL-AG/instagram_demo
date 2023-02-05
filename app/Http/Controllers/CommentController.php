@@ -69,6 +69,8 @@ class CommentController extends Controller
     {
         abort_if($comment == null, 404);
 
+        $this->authorize('update', $comment); // the policy a have created pass to it the post and check if the user is authorized
+
         return view('comments.edit', [
             'comment' => $comment
         ]);
@@ -84,6 +86,8 @@ class CommentController extends Controller
     public function update(Request $request, Comment $comment)
     {
         abort_if($comment == null, 404);
+
+        $this->authorize('update', $comment); // the policy a have created pass to it the post and check if the user is authorized
 
         $data = request()->validate([
             'comment' => 'required|string|max:255'
@@ -103,6 +107,8 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         abort_if($comment == null, 404);
+
+        $this->authorize('delete', $comment); // the policy a have created pass to it the post and check if the user is authorized
 
         $comment->delete();
 
