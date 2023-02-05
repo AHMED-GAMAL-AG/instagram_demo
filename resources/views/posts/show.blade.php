@@ -33,7 +33,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="text-xs ms-2" type="submit"
-                                        onclick="return confirm('Are you sure you want to delete this Post? this will delete your comment permanently.')">
+                                        onclick="return confirm('Are you sure you want to delete this Post? this will delete your post permanently.')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -68,6 +68,16 @@
                                     <span>{{ $comment->comment }}</span>
                                     <div class="text-gray-500 text-xs">{{ $comment->created_at->format('M j o') }}
                                         @if (auth()->id() == $comment->user_id)
+                                            {{-- route takes the action and the id --}}
+                                            <form class="inline-block"
+                                                action="{{ route('comments.destroy', $comment->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="text-xs ms-2" type="submit"
+                                                    onclick="return confirm('Are you sure you want to delete this Comment? this will delete your comment permanently.')">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
                                             <a href="/comments/{{ $comment->id }}/edit" class="text-xs ms-2"><i
                                                     class="fa fa-edit"></i></a>
                                         @endif

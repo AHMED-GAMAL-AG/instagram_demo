@@ -83,6 +83,8 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        abort_if($comment == null, 404);
+
         $data = request()->validate([
             'comment' => 'required|string|max:255'
         ]);
@@ -100,6 +102,10 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        abort_if($comment == null, 404);
+
+        $comment->delete();
+
+        return redirect('posts/' . $comment->post_id);
     }
 }
