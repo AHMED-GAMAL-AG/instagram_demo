@@ -11,7 +11,7 @@ class LikeButton extends Component
     private $post;
     public $post_id; // public variables could be accessed by js and frontend
     public $isLiked; // to set the button color in the component
-
+    public $likeCount;
 
     // the ToggleLike function is only called when clicked on the button so when i refresh the button color will disappear
     // livewire call the function mount when the component like-button is running
@@ -22,6 +22,7 @@ class LikeButton extends Component
         if ($this->post != null && auth()->user() != null) {
             $this->post->likedByUser(auth()->user()) ? $this->isLiked = true : $this->isLiked = false;
         }
+        $this->likeCount = $this->post->likedByUsers()->count();
     }
 
     public function ToggleLike($post_id) // to set the like-button color and do the database query
@@ -36,6 +37,7 @@ class LikeButton extends Component
         } else {
             redirect(route('login'));
         }
+        $this->likeCount = $this->post->likedByUsers()->count();
     }
 
     public function render()

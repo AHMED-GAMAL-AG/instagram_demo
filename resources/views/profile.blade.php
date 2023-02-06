@@ -67,7 +67,7 @@
                                 <li class="inline-block font-semibold mr-7">
                                     <span class="absolute h-1 w-1 overflow-hidden">{{ __('Likes:') }}</span>
                                     <i class="fas fa-heart" aria-hidden="true"></i>
-                                    66
+                                    {{$post->likedByUsers()->count()}}
                                 </li>
                                 <li class="inline-block font-semibold">
                                     <span class="absolute h-1 w-1 overflow-hidden">{{ __('Comments:') }}</span>
