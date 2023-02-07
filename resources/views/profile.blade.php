@@ -34,11 +34,13 @@
                             <li class="mr-10 cursor-pointer"> <span class="font-semibold">{{ $posts->count() }}</span>
                                 {{ __('posts') }}
                             </li>
-                            <li class="mr-10"><a href="#"><span class="font-semibold">25 </span> </a>
-                                {{ __('followers') }}
+                            <li class="mr-10"><a href="{{ route('followers') }}"><span class="font-semibold">{{$profile->followers()->count()}}</span>
+                                    {{ __('followers') }}
+                                </a>
                             </li>
-                            <li class="mr-10"><a href="#"><span class="font-semibold">25 </span> </a>
-                                {{ __('following') }}
+                            <li class="mr-10"><a href="{{ route('following') }}"><span class="font-semibold">{{$profile->follows()->count()}}</span>
+                                    {{ __('following') }}
+                                </a>
                             </li>
                         </ul>
                         <p class="mb-1 font-black">{{ $profile->name }}</p>
