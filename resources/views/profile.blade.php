@@ -1,5 +1,4 @@
 <x-app-layout>
-
     {{-- will be displayed in the {{$header}} app.blade.php --}}
     <x-slot name="header">
         {{-- user image and account information --}}
@@ -34,11 +33,13 @@
                             <li class="mr-10 cursor-pointer"> <span class="font-semibold">{{ $posts->count() }}</span>
                                 {{ __('posts') }}
                             </li>
-                            <li class="mr-10"><a href="{{ route('followers') }}"><span class="font-semibold">{{$profile->followers()->count()}}</span>
+                            <li class="mr-10"><a href="{{ route('followers') }}"><span
+                                        class="font-semibold">{{ $profile->followers()->count() }}</span>
                                     {{ __('followers') }}
                                 </a>
                             </li>
-                            <li class="mr-10"><a href="{{ route('following') }}"><span class="font-semibold">{{$profile->follows()->count()}}</span>
+                            <li class="mr-10"><a href="{{ route('following') }}"><span
+                                        class="font-semibold">{{ $profile->follows()->count() }}</span>
                                     {{ __('following') }}
                                 </a>
                             </li>
@@ -56,28 +57,63 @@
     {{-- the post --}}
     <div class="max-w-4xl my-0 mx-auto">
         <hr class="mb-10">
-        <div class="grid grid-cols-3 gap-4 mx-0 mt-0 mb-6">
+        @if ($profile->status == 'public')
 
-            @foreach ($posts as $post)
-                <div class="post">
-                    <a href="posts/{{ $post->id }}" class="w-full h-full">
-                        <img src="/storage/{{ $post->image_path }}" class="w-full h-full object-cover">
-                        <div class="post-info">
-                            <ul>
-                                <li class="inline-block font-semibold mr-7">
-                                    <span class="absolute h-1 w-1 overflow-hidden">{{ __('Likes:') }}</span>
-                                    <i class="fas fa-heart" aria-hidden="true"></i>
-                                    {{ $post->likedByUsers()->count() }}
-                                </li>
-                                <li class="inline-block font-semibold">
-                                    <span class="absolute h-1 w-1 overflow-hidden">{{ __('Comments:') }}</span>
-                                    <i class="fas fa-comment" aria-hidden="true"></i>
-                                    {{ $post->comments()->count() }}
-                                </li>
-                            </ul>
+            <div class="grid grid-cols-3 gap-4 mx-0 mt-0 mb-6">
+                @foreach ($posts as $post)
+                    <div class="post">
+                        <a href="posts/{{ $post->id }}" class="w-full h-full">
+                            <img src="/storage/{{ $post->image_path }}" class="w-full h-full object-cover">
+                            <div class="post-info">
+                                <ul>
+                                    <li class="inline-block font-semibold mr-7">
+                                        <span class="absolute h-1 w-1 overflow-hidden">{{ __('Likes:') }}</span>
+                                        <i class="fas fa-heart" aria-hidden="true"></i>
+                                        {{ $post->likedByUsers()->count() }}
+                                    </li>
+                                    <li class="inline-block font-semibold">
+                                        <span class="absolute h-1 w-1 overflow-hidden">{{ __('Comments:') }}</span>
+                                        <i class="fas fa-comment" aria-hidden="true"></i>
+                                        {{ $post->comments()->count() }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            @can('view-profile', $profile)
+                <div class="grid grid-cols-3 gap-4 mx-0 mt-0 mb-6">
+                    @foreach ($posts as $post)
+                        <div class="post">
+                            <a href="posts/{{ $post->id }}" class="w-full h-full">
+                                <img src="/storage/{{ $post->image_path }}" class="w-full h-full object-cover">
+                                <div class="post-info">
+                                    <ul>
+                                        <li class="inline-block font-semibold mr-7">
+                                            <span class="absolute h-1 w-1 overflow-hidden">{{ __('Likes:') }}</span>
+                                            <i class="fas fa-heart" aria-hidden="true"></i>
+                                            {{ $post->likedByUsers()->count() }}
+                                        </li>
+                                        <li class="inline-block font-semibold">
+                                            <span class="absolute h-1 w-1 overflow-hidden">{{ __('Comments:') }}</span>
+                                            <i class="fas fa-comment" aria-hidden="true"></i>
+                                            {{ $post->comments()->count() }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            @else
+                <div>
+                    <h1 class="text-center">{{ __('This account is private') }}</h1>
+                    <p class="text-center">{{ __('follow to see their posts') }}</p>
+                </div>
+            @endcan
+        @endif
+    </div>
+
 </x-app-layout>

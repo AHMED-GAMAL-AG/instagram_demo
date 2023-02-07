@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-profile', function ($user, User $profile) {
+            // if public or the profile is my one or i follow this profile then allow the user to see it
+            if ($profile->status == 'public' || $user->id == $profile->id || $user->following($profile)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
     }
 }
