@@ -30,8 +30,8 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        // if public or the profile is my one or i follow this profile then allow the user to see it
-        if ($post->user->status == 'public' || $user->id == $post->user->id || $user->following($post->user)) {
+        // if public or the profile is my one or i follow this profile and he accepted it then allow the user to see it
+        if ($post->user->status == 'public' || $user->id == $post->user->id || $user->followingAndAccepted($post->user)) {
             return true;
         } else {
             return false;

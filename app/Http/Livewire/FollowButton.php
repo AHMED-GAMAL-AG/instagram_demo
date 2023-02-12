@@ -8,7 +8,7 @@ use Livewire\Component;
 class FollowButton extends Component
 {
 
-    private $profile; // user object
+    private $profile; // user id to be followed profile
     public $profile_id; // user id to be followed
     public $following = "follow"; // to change the button from follow to un follow
 
@@ -28,8 +28,8 @@ class FollowButton extends Component
 
         if ($this->profile != null && auth()->user() != null) {
             auth()->user()->follows()->toggle($this->profile); // to follow a user
-            // $this->profile->followers()->toggle($this->profile); // to be followed by a user
             auth()->user()->following($this->profile) ? $this->following = "unfollow" : $this->following = "follow";
+            auth()->user()->setAccepted($this->profile); // to accept the follow req automaticly when click follow if acc is public
         } else {
             return redirect(route('login'));
         }

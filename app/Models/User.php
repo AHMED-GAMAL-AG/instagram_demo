@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -88,5 +89,67 @@ class User extends Authenticatable
     public function following(User $user) // to check if a user is following another one
     {
         return $this->follows()->where('following_user_id', $user->id)->exists(); // if this user follow the $user return true
+    }
+
+    public function setAccepted(User $user) // accept the request automaticly if profile is public
+    {
+        if ($user->status == 'public') {
+            DB::table('follows')
+                ->where('user_id', $this->id)
+                ->where('following_user_id', $user->id)
+                ->update([
+                    'accepted' => true
+                ]);
+        }
+    }
+
+    public function accepted(User $user) // to check if a user accepted another one
+    {
+        if ($this->status == 'public') {
+            return true;
+        } else {
+            return (bool) DB::table('follows')
+                ->where('user_id', $this->id)
+                ->where('following_user_id', $user->id)
+                ->where('accepted', true)->count(); // count will return 1 = true
+        }
+    }
+
+    public function followRequest() // to send a follow requests
+    {
+        if ($this->status == 'private') {
+            return $this->followers()
+                ->where('following_user_id', $this->id)
+                ->where('accepted', false)
+                ->latest()->get();
+        } else {
+            return null;
+        }
+    }
+
+    public function pendingFollowRequest() // to receive a follow request
+    {
+        return $this->follows()
+            ->where('user_id', $this->id)
+            ->where('accepted', false)
+            ->latest()->get();
+    }
+
+    public function followingAndAccepted(User $user) // to check accepted status of a following request
+    {
+        return $this->follows()
+            ->where('following_user_id', $user->id)
+            ->where('accepted', true)
+            ->exists();
+    }
+
+    public function toggleAccepted(User $user, $status)
+    {
+        return DB::table('follows')
+            ->where('user_id', $user->id)
+            ->where('following_user_id', $this->id)
+            ->update([
+                'accepted' => $status
+            ]);
     }
 }

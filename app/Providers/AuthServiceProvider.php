@@ -29,13 +29,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('view-profile', function ($user, User $profile) {
-            // if public or the profile is my one or i follow this profile then allow the user to see it
-            if ($profile->status == 'public' || $user->id == $profile->id || $user->following($profile)) {
+            // if public or the profile is my one or i follow this profile and he accepted it then allow the user to see it
+            if ($profile->status == 'public' || $user->id == $profile->id || $user->followingAndAccepted($profile)) {
                 return true;
             } else {
                 return false;
             }
         });
-
     }
 }

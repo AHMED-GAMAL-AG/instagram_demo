@@ -23,6 +23,9 @@
                                 {{ $follower->bio }}</h3>
                         </div>
                     </div>
+                    @if ($profile->status == 'private')
+                        @livewire('accept-follow', ['profile_id' => $follower->id], key($follower->username))
+                    @endif
                     @livewire('follow-button', ['profile_id' => $follower->id], key($follower->id))
                 </div>
             </div>

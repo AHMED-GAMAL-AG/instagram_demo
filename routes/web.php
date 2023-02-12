@@ -44,6 +44,19 @@ Route::get('/following', function () {
     ]);
 })->name('following')->middleware('auth:sanctum'); // to make auth throw session cookies
 
+
+Route::get('/inbox', function () {
+    $user = auth()->user();
+    $requests = $user->followRequest();
+    $pendings =  $user->pendingFollowRequest();
+
+    return view('inbox', [
+        'profile' => $user,
+        'requests' => $requests,
+        'pendings' => $pendings,
+    ]);
+})->name('inbox')->middleware('auth:sanctum');
+
 // dont put any route after this as it will return error for ex. if i went to route followers it will catch "followers" in '{username}' and search for a user called followers
 Route::get('{username}', function ($username) {
     $user = User::where('username', $username)->first(); // search the user table with the 'username' field that matches the value of the $username The first() method is used to retrieve only the first result of the query
