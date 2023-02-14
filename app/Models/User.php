@@ -109,8 +109,8 @@ class User extends Authenticatable
             return true;
         } else {
             return (bool) DB::table('follows')
-                ->where('user_id', $this->id)
-                ->where('following_user_id', $user->id)
+                ->where('user_id', $user->id)
+                ->where('following_user_id', $this->id)
                 ->where('accepted', true)->count(); // count will return 1 = true
         }
     }
