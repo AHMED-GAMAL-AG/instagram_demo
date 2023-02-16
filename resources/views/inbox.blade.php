@@ -15,7 +15,7 @@
                 <div class="flex flex-row justify-around">
                     <div class="flex flex-row ">
                         <a href="/{{ $req->username }}"><img src="{{ $req->profile_photo_url }}" alt="avatar"
-                                class="rounded-full h-10 w-10 me-3"></a>
+                                class="rounded-full h-10 w-10 mr-3"></a>
                         <div class="flex flex-col self-center">
                             <a href="/{{ $req->username }}"
                                 class="text-base hover:underline whitespace-nowrap">{{ $req->username }}</a>
@@ -47,7 +47,7 @@
                 <div class="flex flex-row justify-around">
                     <div class="flex flex-row ">
                         <a href="/{{ $pending->username }}"><img src="{{ $pending->profile_photo_url }}" alt="avatar"
-                                class="rounded-full h-10 w-10 me-3"></a>
+                                class="rounded-full h-10 w-10 mr-3"></a>
                         <div class="flex flex-col self-center">
                             <a href="/{{ $pending->username }}"
                                 class="text-base hover:underline whitespace-nowrap">{{ $pending->username }}</a>

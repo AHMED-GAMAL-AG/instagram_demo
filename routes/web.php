@@ -16,46 +16,60 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect()->route('user_profile', ['username' => auth()->user()->username]);
-    })->name('dashboard');
-});
-
-
-
 // 'sanctum' used for managing api tokens and session cookies
-Route::get('/followers', function () {
-    return view('followers', [
-        'profile' => auth()->user(), // the current user
-        'followers' => auth()->user()->followers()->get(), // a list of who follow me
-    ]);
-})->name('followers')->middleware('auth:sanctum'); // to make auth throw session cookies
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('user_profile', ['username' => auth()->user()->username]);
+    });
+
+    Route::get('/home', function () {
+
+        $profile = auth()->user();
+        // take only 3 results
+        $i_follow = $profile->iFollow()->take(3);
+        $to_follow = $profile->otherUsers()->take(3);
+
+        return view('home', [
+            'posts' => auth()->user()->home(),
+            'profile' => $profile,
+            'i_follow' => $i_follow,
+            'to_follow' => $to_follow,
+        ]);
+    })->name('home');
+
+    Route::get('/followers', function () {
+        return view('followers', [
+            'profile' => auth()->user(), // the current user
+            'followers' => auth()->user()->followers()->get(), // a list of who follow me
+        ]);
+    })->name('followers');
+
+    Route::get('/following', function () {
+        return view('following', [
+            'profile' => auth()->user(), // the current user
+            'following' => auth()->user()->follows()->get(), // a list of who i follow
+        ]);
+    })->name('following');
+
+    Route::get('/inbox', function () {
+        $user = auth()->user();
+
+        $requests = $user->followRequest();
+        $pendings =  $user->pendingFollowRequest();
+
+        return view('inbox', [
+            'profile' => $user,
+            'requests' => $requests,
+            'pendings' => $pendings,
+        ]);
+    })->name('inbox');
+
+    Route::resource('/comments', CommentController::class);
+
+    Route::resource('/posts', PostController::class);
+});
 
 
-Route::get('/following', function () {
-    return view('following', [
-        'profile' => auth()->user(), // the current user
-        'following' => auth()->user()->follows()->get(), // a list of who i follow
-    ]);
-})->name('following')->middleware('auth:sanctum'); // to make auth throw session cookies
-
-
-Route::get('/inbox', function () {
-    $user = auth()->user();
-    $requests = $user->followRequest();
-    $pendings =  $user->pendingFollowRequest();
-
-    return view('inbox', [
-        'profile' => $user,
-        'requests' => $requests,
-        'pendings' => $pendings,
-    ]);
-})->name('inbox')->middleware('auth:sanctum');
 
 // dont put any route after this as it will return error for ex. if i went to route followers it will catch "followers" in '{username}' and search for a user called followers
 Route::get('{username}', function ($username) {
@@ -71,7 +85,3 @@ Route::get('{username}', function ($username) {
         ]);
     }
 })->name('user_profile'); // name of the route
-
-Route::resource('/posts', PostController::class);
-
-Route::resource('/comments', CommentController::class);

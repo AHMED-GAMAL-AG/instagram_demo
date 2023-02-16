@@ -13,6 +13,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'verified'])->except(['show']); // do authentication on all methods except show
+    }
+
     public function index()
     {
         abort(404); // the user should see his posts only not all the posts
@@ -71,7 +78,7 @@ class PostController extends Controller
         }
 
         if (auth()->user() != null || $post->user->status == 'private') {
-            $this->authorize('view' ,$post);
+            $this->authorize('view', $post);
         }
         return view('posts.show', [
             'post' => $post

@@ -127,7 +127,7 @@ class User extends Authenticatable
         }
     }
 
-    public function pendingFollowRequest() // to receive a follow request
+    public function pendingFollowRequest() // pending Follow Requests
     {
         return $this->follows()
             ->where('user_id', $this->id)
@@ -151,5 +151,31 @@ class User extends Authenticatable
             ->update([
                 'accepted' => $status
             ]);
+    }
+
+    public function home() // get the ids of my followings
+    {
+        // pluck get only the id
+        $ids = $this->follows()->where('accepted', true)->get()->pluck('id'); // get the ids only of my followings that accepted the request
+        return Post::whereIn('user_id', $ids)->latest()->get(); // return the posts
+    }
+
+    public function iFollow() // get the latest list of people i follow
+    {
+        return $this->follows()
+            ->where('user_id', $this->id)
+            ->where('accepted', true)
+            ->latest()->get();
+    }
+
+    public function otherUsers() // get a list of users that i did not follow yet
+    {
+        $i_follow = $this->iFollow()->pluck('id')->toArray(); // a list of list of people i follow
+        $pending_follow = $this->pendingFollowRequest()->pluck('id')->toArray(); // a list of list of people i send request to
+        array_push($i_follow, $this->id); // add current id to $iFollow
+
+        $others = array_merge($i_follow, $pending_follow);
+
+        return User::whereNotIn('id', $others)->latest()->get(); // return all users except others
     }
 }

@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16 items-center">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="#">
+                <a href="{{route('home')}}">
                     <div>
                         <h1 style="font-family:Norican" class="text-3xl">{{ __('Instagram Demo') }}</h1>
                     </div>
@@ -76,7 +76,7 @@
 
                     <!-- Settings Dropdown -->
                     <div class="sm:flex sm:items-center sm:ms-6">
-                        <a href="#" class="text-2xl mx-2 text-gray-700"><i class="fas fa-home"></i></a>
+                        <a href="{{route('home')}}" class="text-2xl mx-2 text-gray-700"><i class="fas fa-home"></i></a>
                         <a href="#" class="text-2xl mx-2 text-gray-700"><i class="far fa-compass"></i></a>
                         <a href="{{route('inbox')}}" class="text-2xl mx-2 text-gray-700"><i class="fas fa-inbox"></i></a>
 
@@ -173,8 +173,8 @@
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                <x-jet-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    {{ __('Home') }}
                 </x-jet-responsive-nav-link>
             </div>
 

@@ -55,7 +55,7 @@
                                 <img src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->username }}"
                                     class="rounded-full h-10 w-10 ">
                             </div>
-                            <div class="col-span-4 mt-5 me-7">
+                            <div class="col-span-4 mt-5 mr-7">
                                 <a class="font-bold hover:underline"
                                     href="/{{ $post->user->username }}">{{ $post->user->username }} </a>
                                 <span>{{ $post->post_caption }}</span>
@@ -66,7 +66,7 @@
                                         alt="{{ $comment->user->username }}" srcset=""
                                         class="rounded-full h-10 w-10 ">
                                 </div>
-                                <div class="col-span-4 mt-5 me-7">
+                                <div class="col-span-4 mt-5 mr-7">
                                     <a class="font-bold hover:underline"
                                         href="/{{ $comment->user->username }}">{{ $comment->user->username }} </a>
                                     <span>{{ $comment->comment }}</span>
