@@ -56,12 +56,17 @@ class PostController extends Controller
 
         $image_path = request('image_path')->store('uploads', 'public'); // save image to a folder called user using public storage
 
-        auth()->user()->posts()->create([ // ignore error
-            'post_caption' => $data['post_caption'],
-            'image_path' => $image_path
-        ]);
+        // auth()->user()->posts()->create([ // ignore error
+        //     'post_caption' => $data['post_caption'],
+        //     'image_path' => $image_path
+        // ]);
 
-        return redirect()->route('user_profile', ['username' => auth()->user()->username]);
+        // return redirect()->route('user_profile', ['username' => auth()->user()->username]);
+
+        return view('applyFilters', [
+            'post_caption' => $data['post_caption'],
+            'image_path' => $image_path,
+        ]);
     }
 
     /**
