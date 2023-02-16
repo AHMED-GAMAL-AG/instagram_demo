@@ -44,6 +44,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ]);
     })->name('followers');
 
+
+    Route::get('/explore', function () {
+        return view('explore' , [
+            'profile' => auth()->user(), // the current user
+            'posts' => auth()->user()->explore(),
+        ] );
+    })->name('explore');
+
     Route::get('/following', function () {
         return view('following', [
             'profile' => auth()->user(), // the current user

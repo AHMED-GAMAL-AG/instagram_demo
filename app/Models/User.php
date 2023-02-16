@@ -178,4 +178,15 @@ class User extends Authenticatable
 
         return User::whereNotIn('id', $others)->latest()->get(); // return all users except others
     }
+
+    public function explore() // get the ids of the users with public profile
+    {
+        $i_follow = $this->iFollow()->pluck('id')->toArray(); // a list of list of people i follow
+        array_push($i_follow, $this->id); // add current id to $iFollow
+
+        $public = User::where('status', 'public')->pluck('id')->toArray(); // users with public profile
+        $others = array_merge($i_follow, $public);
+
+        return Post::whereNotIn('user_id', $others)->latest()->get(); // return all users that i dont follow with a public status
+    }
 }
