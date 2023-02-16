@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16 items-center">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="{{route('home')}}">
+                <a href="{{ route('home') }}">
                     <div>
                         <h1 style="font-family:Norican" class="text-3xl">{{ __('Instagram Demo') }}</h1>
                     </div>
@@ -13,10 +13,7 @@
 
             @if (Auth::check())
                 {{-- Search --}}
-                <div>
-                    <input type="text" name="" id="" placeholder="search"
-                        class="border border-gray-300 border-solid text-center">
-                </div>
+                @livewire('search', ['profile' => auth()->id()], key(auth()->id()))
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <!-- Teams Dropdown -->
@@ -76,9 +73,12 @@
 
                     <!-- Settings Dropdown -->
                     <div class="sm:flex sm:items-center sm:ms-6">
-                        <a href="{{route('home')}}" class="text-2xl mx-2 text-gray-700"><i class="fas fa-home"></i></a>
-                        <a href="{{route('explore')}}" class="text-2xl mx-2 text-gray-700"><i class="far fa-compass"></i></a>
-                        <a href="{{route('inbox')}}" class="text-2xl mx-2 text-gray-700"><i class="fas fa-inbox"></i></a>
+                        <a href="{{ route('home') }}" class="text-2xl mx-2 text-gray-700"><i
+                                class="fas fa-home"></i></a>
+                        <a href="{{ route('explore') }}" class="text-2xl mx-2 text-gray-700"><i
+                                class="far fa-compass"></i></a>
+                        <a href="{{ route('inbox') }}" class="text-2xl mx-2 text-gray-700"><i
+                                class="fas fa-inbox"></i></a>
 
                         <x-jet-dropdown align="right" width="48">
                             <x-slot name="trigger">
