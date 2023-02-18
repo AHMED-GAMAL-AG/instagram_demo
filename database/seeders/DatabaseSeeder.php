@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         User::factory()
-            ->times(3)
-            ->has(Post::factory()->count(3))
+            ->times(20)
+            ->has(Post::factory()->count(20))
             ->create();
     }
 }

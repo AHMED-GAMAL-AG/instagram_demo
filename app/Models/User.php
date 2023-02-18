@@ -121,7 +121,7 @@ class User extends Authenticatable
             return $this->followers()
                 ->where('following_user_id', $this->id)
                 ->where('accepted', false)
-                ->latest()->get();
+                ->latest()->paginate(5);
         } else {
             return null;
         }
@@ -132,7 +132,7 @@ class User extends Authenticatable
         return $this->follows()
             ->where('user_id', $this->id)
             ->where('accepted', false)
-            ->latest()->get();
+            ->latest()->paginate(5);
     }
 
     public function followingAndAccepted(User $user) // to check accepted status of a following request
@@ -157,7 +157,7 @@ class User extends Authenticatable
     {
         // pluck get only the id
         $ids = $this->follows()->where('accepted', true)->get()->pluck('id'); // get the ids only of my followings that accepted the request
-        return Post::whereIn('user_id', $ids)->latest()->get(); // return the posts
+        return Post::whereIn('user_id', $ids)->latest()->paginate(20); // return the posts
     }
 
     public function iFollow() // get the latest list of people i follow
@@ -184,9 +184,9 @@ class User extends Authenticatable
         $i_follow = $this->iFollow()->pluck('id')->toArray(); // a list of list of people i follow
         array_push($i_follow, $this->id); // add current id to $iFollow
 
-        $public = User::where('status', 'public')->pluck('id')->toArray(); // users with public profile
+        $public = User::where('status', 'private')->pluck('id')->toArray(); // users with public profile
         $others = array_merge($i_follow, $public);
 
-        return Post::whereNotIn('user_id', $others)->latest()->get(); // return all users that i dont follow with a public status
+        return Post::whereNotIn('user_id', $others)->latest()->paginate(20); // return all users that i dont follow with a public status
     }
 }

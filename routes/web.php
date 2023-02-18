@@ -40,22 +40,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/followers', function () {
         return view('followers', [
             'profile' => auth()->user(), // the current user
-            'followers' => auth()->user()->followers()->get(), // a list of who follow me
+            'followers' => auth()->user()->followers()->paginate(10), // a list of who follow me
         ]);
     })->name('followers');
-
-
-    Route::get('/explore', function () {
-        return view('explore' , [
-            'profile' => auth()->user(), // the current user
-            'posts' => auth()->user()->explore(),
-        ] );
-    })->name('explore');
 
     Route::get('/following', function () {
         return view('following', [
             'profile' => auth()->user(), // the current user
-            'following' => auth()->user()->follows()->get(), // a list of who i follow
+            'following' => auth()->user()->follows()->paginate(10), // a list of who i follow
         ]);
     })->name('following');
 
@@ -72,6 +64,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ]);
     })->name('inbox');
 
+    Route::get('/explore', function () {
+        return view('explore', [
+            'profile' => auth()->user(), // the current user
+            'posts' => auth()->user()->explore(),
+        ]);
+    })->name('explore');
+
     Route::resource('/comments', CommentController::class);
 
     Route::resource('/posts', PostController::class);
@@ -86,7 +85,7 @@ Route::get('{username}', function ($username) {
     if ($user == null) {
         abort(404);
     } else {
-        $posts = $user->posts;
+        $posts = $user->posts()->paginate(3);
         return view('profile', [
             'profile' => $user,
             'posts' => $posts
