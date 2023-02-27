@@ -19,7 +19,8 @@ class PostFactory extends Factory
         return [
             'post_caption' => $this->faker->paragraph,
             // the faker takes the place to store the image and return the image name so concatenate 'uploads/' before it to store in the database
-            'image_path' => 'uploads/' . $this->faker->image('public/storage/uploads', 800, 600, null, false),
+            // 'image_path' => 'uploads/' . $this->faker->image('public/storage/uploads', 800, 600, null, false),
+            'image_path' => 'uploads/' . rand(1, 16) . '.png',
         ];
     }
 }

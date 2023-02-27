@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('language', ['ar', 'en'])->default('ar'); // enum named language for th user to set ar or en
+            $table->enum('language', ['ar', 'en'])->default('en'); // enum named language for th user to set ar or en
         });
     }
 

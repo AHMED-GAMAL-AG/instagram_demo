@@ -27,6 +27,8 @@
             height: 293px;
         }
 
+
+
         .post:hover .post-info,
         .post:focus .post-info {
             display: flex;
@@ -96,8 +98,13 @@
 
         function copyToClipboard(id) {
             var postlink = document.getElementById(id);
-            navigator.clipboard.writeText(postlink.value);
-            alert("The shareable link: " + postlink.value);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(postlink.value);
+                alert("The shareable link: " + postlink.value);
+            } else {
+                // معالجة حالة عدم توفر هذه الميزة
+                alert("Copy to clipboard is not supported in this browser.");
+            }
         }
     </script>
 </body>

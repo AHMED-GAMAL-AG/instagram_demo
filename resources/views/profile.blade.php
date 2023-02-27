@@ -30,7 +30,7 @@
                     {{-- followers/following ,bio,link --}}
                     <div>
                         <ul class="flex flex-row mb-5">
-                            <li class="me-10 cursor-pointer"> <span class="font-semibold">{{ $posts->count() }}</span>
+                            <li class="me-10 cursor-pointer"> <span class="font-semibold">{{ $profile->posts()->count() }}</span>
                                 {{ __('posts') }}
                             </li>
                             <li class="me-10"><a href="{{ route('followers') }}"><span

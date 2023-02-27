@@ -110,7 +110,7 @@
                             <form action="/comments" method="post" autocomplete="off">
                                 @csrf
                                 <div class="flex flex-row items-center justify-between">
-                                    <input class="w-full outline-none border-none p-1" type="text" id="comment{{$post->id}}"
+                                    <input class="w-full outline-none border-none p-1" type="text" id="comment-{{$post->id}}"
                                         placeholder="{{ __('Add Comment') }}" name="comment" autofocus />
                                     {{-- pass the post_id as a hidden input to the stor() in the comments controller --}}
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">

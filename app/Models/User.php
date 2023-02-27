@@ -188,6 +188,6 @@ class User extends Authenticatable
         $public = User::where('status', 'private')->pluck('id')->toArray(); // users with public profile
         $others = array_merge($i_follow, $public);
 
-        return Post::whereNotIn('user_id', $others)->latest()->paginate(20); // return all users that i dont follow with a public status
+        return Post::whereNotIn('user_id', $others)->latest()->paginate(50); // return all users that i dont follow with a public status
     }
 }

@@ -82,8 +82,8 @@
             <a href="/{{ $profile->username }}"><img src="{{ $profile->profile_photo_url }}" alt="avatar"
                     class="rounded-full h-12 w-12 me-3 "></a>
             <div class="flex flex-col">
-                <a href="/{{ $profile->username }}" class="text-base hover:underline">{{ $profile->username }}</a>
-                <h3 class="text-sm text-gray-400 ">{{ $profile->bio }}</h3>
+                <a href="/{{ $profile->username }}" class="text-base hover:underline ms-2">{{ $profile->username }}</a>
+                <h3 class="text-sm text-gray-400 ms-2">{{ $profile->bio }}</h3>
             </div>
         </div>
 

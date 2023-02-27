@@ -9,7 +9,7 @@
 
             {{-- url() get the app url and add to it the id of the post --}}
             <button class="text-2xl me-3 focus:outline-none"
-                onClick="document.getElementById(comment({{ $post_id }})).focus()"><i
+                onClick="document.getElementById('comment-{{ $post_id }}').focus()"><i
                     class="far fa-comment"></i></button>
 
 

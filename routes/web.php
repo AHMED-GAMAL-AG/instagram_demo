@@ -83,7 +83,7 @@ Route::get('{username}', function ($username) {
     if ($user == null) {
         abort(404);
     } else {
-        $posts = $user->posts()->paginate(3);
+        $posts = $user->posts()->paginate(9);
         return view('profile', [
             'profile' => $user,
             'posts' => $posts
