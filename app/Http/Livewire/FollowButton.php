@@ -18,7 +18,7 @@ class FollowButton extends Component
         $this->profile = User::find($profile_id);
 
         if ($this->profile != null && auth()->user() != null) {
-            auth()->user()->following($this->profile) ? $this->following = "unfollow" : $this->following = "follow";
+            auth()->user()->following($this->profile) ? $this->following = "Unfollow" : $this->following = "Follow";
         }
     }
 
@@ -28,7 +28,7 @@ class FollowButton extends Component
 
         if ($this->profile != null && auth()->user() != null) {
             auth()->user()->follows()->toggle($this->profile); // to follow a user
-            auth()->user()->following($this->profile) ? $this->following = "unfollow" : $this->following = "follow";
+            auth()->user()->following($this->profile) ? $this->following = "Unfollow" : $this->following = "Follow";
             auth()->user()->setAccepted($this->profile); // to accept the follow req automaticly when click follow if acc is public
         } else {
             return redirect(route('login'));

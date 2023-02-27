@@ -1,7 +1,7 @@
 <div>
     {{-- wire:keydown.debounce.1000ms to delay 1 second after search --}}
     <input wire:model="search" wire:keydown.debounce="findProfile('{{ $search }}')" type="text"
-        placeholder="search" class="border border-gray-300 border-solid text-center">
+        placeholder="{{ __('Search') }}" class="border border-gray-300 border-solid text-center">
 
     @if ($results != null)
         <ul class="absolute mt-2 w-auto bg-white p-1 shadow-lg border border-gray-500 border-solid z-10">
@@ -9,7 +9,7 @@
                 <li class="flex flex-row items-center justify-between my-1 ">
                     <a class="font-bold text-blue-500 hover:underline" href="/{{ $profile['username'] }}">
                         <img src="{{ $profile['profile_photo_url'] }}" alt="{{ $profile['username'] }}"
-                            class="rounded-full h-10 w-10 mr-24">
+                            class="rounded-full h-10 w-10 me-24">
                     </a>
                     <span>
                         <a class="font-bold text-blue-500 hover:underline" href="/{{ $profile['username'] }}">

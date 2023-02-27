@@ -11,7 +11,7 @@
                             class="w-full h-full object-cover">
                         <div class="post-info">
                             <ul>
-                                <li class="inline-block font-semibold mr-7"><span
+                                <li class="inline-block font-semibold me-7"><span
                                         class="absolute h-1 w-1 overflow-hidden">{{ __('Likes:') }}</span><i
                                         class="fas fa-heart" aria-hidden="true"></i> {{ $post->likedByUsers->Count() }}
                                 </li>

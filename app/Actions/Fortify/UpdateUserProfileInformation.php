@@ -22,7 +22,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'username' => ['required', 'alpha_dash',  'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'bio' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255'],
-            'status' => ['in:public,private'],
+            'language' => ['in:ar,en'], // ar or en
+            'status' => ['in:public,private'],  // public or private
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
@@ -42,6 +43,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'username' => $input['username'],
                 'bio' => $input['bio'],
                 'url' => $input['url'],
+                'language' => $input['language'],
                 'status' => $input['status'],
                 'email' => $input['email'],
             ])->save();
@@ -60,6 +62,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'username' => $input['username'],
             'bio' => $input['bio'],
             'url' => $input['url'],
+            'language' => $input['language'],
             'status' => $input['status'],
             'email' => $input['email'],
             'email_verified_at' => null,

@@ -59,7 +59,7 @@
 
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased  {{ isset($rtl) ? 'rtl' : 'ltr' }}">
     <x-jet-banner />
 
     <div class="min-h-screen bg-gray-100">

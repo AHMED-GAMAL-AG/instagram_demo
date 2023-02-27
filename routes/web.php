@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// 'sanctum' used for managing api tokens and session cookies
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+// 'sanctum' used for managing api tokens and session cookies language i created it  for setting the user language
+Route::middleware(['auth:sanctum', 'verified', 'language'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('user_profile', ['username' => auth()->user()->username]);
     });
@@ -72,8 +72,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('explore');
 
     Route::resource('/comments', CommentController::class);
-
-    Route::resource('/posts', PostController::class);
 });
 
 
@@ -91,4 +89,15 @@ Route::get('{username}', function ($username) {
             'posts' => $posts
         ]);
     }
-})->name('user_profile'); // name of the route
+})->name('user_profile')->middleware('language'); // name of the route
+
+Route::resource('/posts', PostController::class)->middleware('language');
+
+Route::get('setlang/{language}', function ($lang) {
+    if ($lang == "ar" || $lang == "en") {
+        session(['language' => $lang]); // set the language in the session
+    } else {
+        abort(404);
+    }
+    return redirect()->back();
+});
