@@ -52,6 +52,10 @@
         .ltr {
             direction: ltr;
         }
+
+        body.rtl .form-input {
+            background-position: left 0.5rem center;
+        }
     </style>
 
     <!-- Styles -->

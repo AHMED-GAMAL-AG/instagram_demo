@@ -15,7 +15,7 @@ class FollowButton extends Component
 
     public function mount($profile_id)
     {
-        $this->profile = User::find($profile_id);
+        $this->profile = User::findOrFail($profile_id);
 
         if ($this->profile != null && auth()->user() != null) {
             auth()->user()->following($this->profile) ? $this->following = "Unfollow" : $this->following = "Follow";
@@ -24,7 +24,7 @@ class FollowButton extends Component
 
     public function ToggleFollowing($profile_id)
     {
-        $this->profile = User::find($profile_id);
+        $this->profile = User::findOrFail($profile_id);
 
         if ($this->profile != null && auth()->user() != null) {
             auth()->user()->follows()->toggle($this->profile); // to follow a user

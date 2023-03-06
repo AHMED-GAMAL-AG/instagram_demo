@@ -14,7 +14,7 @@ class AcceptFollow extends Component
 
     public function mount($profile_id)
     {
-        $this->profile = User::find($profile_id);
+        $this->profile = User::findOrFail($profile_id);
         if ($this->profile != null && auth()->user() != null) {
             auth()->user()->accepted($this->profile) ? $this->status = 'Accepted' : $this->status = 'Accept';
         }
@@ -22,7 +22,7 @@ class AcceptFollow extends Component
 
     public function toggleAccept($profile_id)
     {
-        $this->profile = User::find($profile_id);
+        $this->profile = User::findOrFail($profile_id);
 
         if ($this->profile != null && auth()->user() != null) {
 

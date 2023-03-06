@@ -17,7 +17,7 @@ class LikeButton extends Component
     // livewire call the function mount when the component like-button is running
     public function mount($post_id)
     {
-        $this->post = Post::find($post_id);
+        $this->post = Post::findOrFail($post_id);
         // check if the user is logged in
         if ($this->post != null && auth()->user() != null) {
             $this->post->likedByUser(auth()->user()) ? $this->isLiked = true : $this->isLiked = false;
@@ -27,7 +27,7 @@ class LikeButton extends Component
 
     public function ToggleLike($post_id) // to set the like-button color and do the database query
     {
-        $this->post = Post::find($post_id);
+        $this->post = Post::findOrFail($post_id);
 
         // check if the user is logged in
         if ($this->post != null && auth()->user() != null) {
