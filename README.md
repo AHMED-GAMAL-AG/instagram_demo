@@ -64,3 +64,15 @@ The user can search for profiles on the website with the username :
 The user can edit/delete his own post or delete comments on his post : 
 
 ![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/350faf50-325f-434d-ac2f-5d7a1d94fea6)
+
+## installation
+
+<ul>
+<li><code>git clone https://github.com/AHMED-GAMAL-AG/instagram_demo.git</code></li>
+<li><code>Create a .env file and configure the database.</code></li>
+<li><code>composer install</code></li>
+<li><code>npm install</code></li>
+<li><code>php artisan key:generate</code></li>
+<li><code>php artisan migrate --seed</code></li>
+<li><code>php artisan storage:link</code></li>
+</ul>
