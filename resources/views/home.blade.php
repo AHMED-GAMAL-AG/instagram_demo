@@ -21,7 +21,7 @@
                     </div>
 
                     {{-- like comment share buttons --}}
-                    <div class="flex flex-row items-center-mt-2">
+                    <div class="flex flex-row items-center mt-4">
                         @livewire('like-button', ['post_id' => $post->id], key($post->id))
                     </div>
 
