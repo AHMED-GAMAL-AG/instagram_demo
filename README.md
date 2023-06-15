@@ -8,8 +8,8 @@ You can find an installation demo below.
 The user can see his posts, followers, how is following him, add posts, and edit profile information on his profile page :
 
 ![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/05fd0868-47f1-4fdc-943c-bf9849a1b887)
-![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/3c0c2e03-ec![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/79eabc12-f0f1-4dd6-b32c-cb28b7c45d1f)
-67-46e1-b224-75ac4487c831)
+![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/fcac89cf-a914-4cd4-a134-c63b8a7e5e30)
+
 
 the user can update his information, change his password, activate two-factor authentication, manage sessions on other browsers, and delete the account from the edit account page :
 
