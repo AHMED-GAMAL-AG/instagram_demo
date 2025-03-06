@@ -29,7 +29,7 @@ the user can apply filters to the image :
 the user can see a list of people he follows or his followers :
 
 ![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/a9e89fbe-2d43-45a3-8c7f-adfb8381464c)
-![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/61d20f49-db6e-4faf-a31e-d14cf751e4df)\
+![image](https://github.com/AHMED-GAMAL-AG/instagram_demo/assets/76778937/61d20f49-db6e-4faf-a31e-d14cf751e4df)
 
 On the home page user see posts from people he follows and can interact with a post (like/comment) :
 
